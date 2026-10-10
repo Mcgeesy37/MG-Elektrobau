@@ -44,6 +44,8 @@
       var fokus = Math.min(cw / (iw * fokusB), ch / (ih * fokusH));
       var s = Math.min(decken, fokus);
       var w = iw * s, h = ih * s;
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = "high";
       ctx.fillStyle = "#0d0e10";
       ctx.fillRect(0, 0, cw, ch);
       ctx.drawImage(bild, (cw - w) / 2, (ch - h) / 2, w, h);
