@@ -1,0 +1,576 @@
+/* MG Elektrobau GmbH
+   Palette aus dem Firmenschild: Schiefer, Graphit, gebuersteter Stahl, Gold.
+   Eine Schriftfamilie (Archivo), Breite als Gestaltungsmittel. */
+
+@font-face {
+  font-family: "Archivo";
+  src: url("../assets/fonts/archivo-latin-standard-normal.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Archivo";
+  src: url("../assets/fonts/archivo-latin-ext-standard-normal.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-stretch: 62% 125%;
+  font-display: swap;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+:root {
+  --schiefer: #131416;
+  --graphit: #1e2023;
+  --fuge: #2c2f33;
+  --stahl: #aab0b6;
+  --papier: #efede7;
+  --gold: #e3a548;
+  --glut: #ffd08a;
+
+  --rand: clamp(20px, 5vw, 88px);
+  --leitung-x: clamp(14px, 2.6vw, 44px);
+  --mass: 68rem;
+
+  --t-klein: 0.875rem;
+  --t-text: 1.0625rem;
+  --t-lead: clamp(1.15rem, 0.9rem + 0.9vw, 1.5rem);
+  --t-h3: clamp(1.25rem, 1rem + 0.9vw, 1.75rem);
+  --t-h2: clamp(2rem, 1.2rem + 3.4vw, 4.25rem);
+  --t-h1: clamp(2.4rem, 1.1rem + 5.6vw, 6rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--schiefer);
+  color: var(--papier);
+  font-family: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--t-text);
+  line-height: 1.6;
+  font-stretch: 100%;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img, canvas { display: block; max-width: 100%; }
+
+a { color: inherit; }
+
+h1, h2, h3 {
+  margin: 0;
+  font-stretch: 125%;
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+h1 { font-size: var(--t-h1); }
+h2 { font-size: var(--t-h2); }
+h3 { font-size: var(--t-h3); line-height: 1.2; }
+
+p { margin: 0; max-width: 62ch; }
+
+:focus-visible {
+  outline: 2px solid var(--glut);
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+.sprung {
+  position: absolute;
+  left: -999px;
+  top: 8px;
+  z-index: 100;
+  background: var(--gold);
+  color: var(--schiefer);
+  padding: 10px 16px;
+}
+.sprung:focus { left: 8px; }
+
+/* ---------- Leitung: der Strompfad am linken Rand ---------- */
+
+.leitung {
+  position: fixed;
+  z-index: 30;
+  top: 0;
+  bottom: 0;
+  left: var(--leitung-x);
+  width: 2px;
+  background: var(--fuge);
+  pointer-events: none;
+}
+.leitung__strom {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: calc(var(--fortschritt, 0) * 100%);
+  background: linear-gradient(to bottom, rgba(227, 165, 72, 0.25), var(--gold) 70%, var(--glut));
+  box-shadow: 0 0 12px rgba(255, 208, 138, 0.55);
+}
+.leitung__strom::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 8px;
+  height: 8px;
+  margin-left: -4px;
+  border-radius: 50%;
+  background: var(--glut);
+  box-shadow: 0 0 14px 4px rgba(255, 208, 138, 0.7);
+}
+
+/* ---------- Kopf ---------- */
+
+.kopf {
+  position: fixed;
+  z-index: 40;
+  inset: 0 0 auto 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 18px var(--rand);
+  transition: background-color 0.3s, backdrop-filter 0.3s;
+}
+.kopf.ist-fest {
+  background: rgba(19, 20, 22, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.marke {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45em;
+  text-decoration: none;
+  font-stretch: 125%;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.01em;
+}
+.marke span { color: var(--gold); }
+.marke small {
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--stahl);
+  letter-spacing: 0.2em;
+}
+.nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(16px, 2.4vw, 36px);
+  font-size: var(--t-klein);
+}
+.nav a { text-decoration: none; color: var(--stahl); padding: 6px 0; }
+.nav a:hover { color: var(--papier); }
+.nav .nav__ruf {
+  color: var(--schiefer);
+  background: var(--gold);
+  padding: 10px 18px;
+  font-weight: 600;
+}
+.nav .nav__ruf:hover { background: var(--glut); color: var(--schiefer); }
+
+.nav .nav__ruf { white-space: nowrap; }
+@media (max-width: 760px) {
+  :root { --leitung-x: 7px; }
+  .nav a:not(.nav__ruf) { display: none; }
+  .marke small { display: none; }
+}
+
+/* ---------- Scroll-Buehnen (Bildfolgen) ---------- */
+
+.buehne { position: relative; }
+.buehne--logo { height: 320vh; }
+.buehne--bau { height: 460vh; }
+
+.buehne__fest {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+  background: #0d0e10;
+}
+.buehne__fest canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.buehne__schleier {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Hero: das Schild rueckt nach oben, sobald der Text erscheint */
+
+.buehne__bild {
+  position: absolute;
+  inset: 0;
+  transform: translateY(calc(var(--text, 0) * -11%)) scale(calc(1 - var(--text, 0) * 0.24));
+  will-change: transform;
+}
+.buehne__bild::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  background:
+    linear-gradient(to right, #0d0e10 0%, rgba(13, 14, 16, 0) 14%, rgba(13, 14, 16, 0) 86%, #0d0e10 100%),
+    linear-gradient(to bottom, #0d0e10 0%, rgba(13, 14, 16, 0) 12%, rgba(13, 14, 16, 0) 84%, #0d0e10 100%);
+}
+
+.buehne--logo .buehne__schleier {
+  background:
+    linear-gradient(to top, #0d0e10 0%, rgba(13, 14, 16, 0.9) 22%, rgba(13, 14, 16, 0) 38%);
+  opacity: var(--text, 0);
+}
+.hero__text {
+  position: absolute;
+  left: var(--rand);
+  right: var(--rand);
+  bottom: clamp(28px, 7vh, 80px);
+  opacity: var(--text, 0);
+  transform: translateY(calc((1 - var(--text, 0)) * 18px));
+}
+.hero__text h1 { font-size: clamp(2.1rem, 1rem + 3.9vw, 4.5rem); max-width: 12ch; }
+.hero__text p {
+  margin-top: 1.1rem;
+  font-size: var(--t-lead);
+  line-height: 1.4;
+  color: var(--stahl);
+  max-width: 40ch;
+}
+@media (min-width: 900px) {
+  .hero__text {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(32px, 6vw, 110px);
+    align-items: end;
+  }
+  .hero__text h1 { max-width: 20ch; font-size: clamp(2.1rem, 0.6rem + 2.9vw, 3.75rem); }
+  .hero__text p { margin-top: 0; }
+}
+@media (max-width: 899px) {
+  .buehne__bild { transform: translateY(calc(var(--text, 0) * -20svh)); }
+}
+.hero__wahl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 1.8rem;
+}
+.knopf {
+  display: inline-block;
+  padding: 15px 26px;
+  font-weight: 600;
+  font-stretch: 112%;
+  text-decoration: none;
+  background: var(--gold);
+  color: var(--schiefer);
+  border: 1px solid var(--gold);
+  transition: background-color 0.2s, color 0.2s;
+}
+.knopf:hover { background: var(--glut); border-color: var(--glut); }
+.knopf--leise { background: transparent; color: var(--papier); border-color: var(--stahl); }
+.knopf--leise:hover { background: var(--papier); color: var(--schiefer); border-color: var(--papier); }
+
+.hero__hinweis {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(24px, 6vh, 56px);
+  text-align: center;
+  font-size: var(--t-klein);
+  color: var(--stahl);
+  opacity: calc(1 - var(--p, 0) * 9);
+}
+.hero__hinweis::after {
+  content: "";
+  display: block;
+  width: 1px;
+  height: 34px;
+  margin: 12px auto 0;
+  background: linear-gradient(var(--gold), transparent);
+}
+
+/* Neubau-Folge */
+
+.buehne--bau .buehne__schleier {
+  background:
+    linear-gradient(to right, rgba(13, 14, 16, 0.9) 0%, rgba(13, 14, 16, 0.55) 34%, rgba(13, 14, 16, 0) 62%),
+    linear-gradient(to top, rgba(13, 14, 16, 0.8) 0%, rgba(13, 14, 16, 0) 40%);
+}
+.bau__kopf {
+  position: absolute;
+  top: clamp(84px, 13vh, 140px);
+  left: var(--rand);
+  right: var(--rand);
+}
+.bau__kopf h2 { max-width: 14ch; }
+
+.stufen {
+  position: absolute;
+  left: var(--rand);
+  bottom: clamp(28px, 8vh, 88px);
+  width: min(30rem, calc(100% - 2 * var(--rand)));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.stufe {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding-left: 22px;
+  border-left: 2px solid var(--gold);
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.45s, transform 0.45s;
+}
+.stufe.ist-aktiv { opacity: 1; transform: none; }
+.stufe h3 { color: var(--glut); }
+.stufe p { margin-top: 0.6rem; color: var(--papier); }
+
+.stufen__takt {
+  position: absolute;
+  right: var(--rand);
+  bottom: clamp(28px, 8vh, 88px);
+  display: flex;
+  gap: 8px;
+}
+.stufen__takt i {
+  width: 28px;
+  height: 2px;
+  background: var(--fuge);
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+.stufen__takt i.ist-an { background: var(--gold); box-shadow: 0 0 8px rgba(255, 208, 138, 0.6); }
+
+@media (max-width: 760px) {
+  .buehne--bau .buehne__schleier {
+    background: linear-gradient(to top, rgba(13, 14, 16, 0.96) 0%, rgba(13, 14, 16, 0.7) 40%, rgba(13, 14, 16, 0) 62%),
+      linear-gradient(to bottom, rgba(13, 14, 16, 0.85) 0%, rgba(13, 14, 16, 0) 34%);
+  }
+  .stufen__takt { display: none; }
+}
+
+/* ---------- Ruhige Abschnitte ---------- */
+
+.abschnitt {
+  position: relative;
+  padding: clamp(88px, 14vw, 190px) var(--rand);
+}
+.abschnitt__innen { max-width: var(--mass); margin: 0 auto; }
+.abschnitt .einstieg {
+  margin-top: 1.6rem;
+  font-size: var(--t-lead);
+  line-height: 1.45;
+  color: var(--stahl);
+  max-width: 52ch;
+}
+
+/* Schaltanlage */
+
+.anlage { background: #0f1012; overflow: hidden; }
+.anlage h2 { max-width: 16ch; }
+.anlage__bild {
+  position: relative;
+  margin: clamp(40px, 6vw, 80px) calc(-1 * var(--rand)) 0;
+}
+.anlage__bild img {
+  width: 100%;
+  height: auto;
+  transform: translateY(calc((0.5 - var(--sicht, 0.5)) * 7%)) scale(1.06);
+  will-change: transform;
+}
+.anlage__bild::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 52%, rgba(255, 190, 110, calc(var(--sicht, 0) * 0.16)), transparent 55%);
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+.marken { margin: 0; padding: 0; list-style: none; }
+.marken li {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 0;
+  height: 0;
+}
+.marken button {
+  position: absolute;
+  left: -13px;
+  top: -13px;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: 1.5px solid var(--glut);
+  border-radius: 50%;
+  background: rgba(19, 20, 22, 0.7);
+  cursor: pointer;
+}
+.marken button::before {
+  content: "";
+  position: absolute;
+  inset: 7px;
+  border-radius: 50%;
+  background: var(--glut);
+  box-shadow: 0 0 10px 2px rgba(255, 208, 138, 0.7);
+}
+.marken .notiz {
+  position: absolute;
+  top: 22px;
+  left: -13px;
+  width: 15rem;
+  padding: 14px 16px;
+  background: rgba(19, 20, 22, 0.94);
+  border-left: 2px solid var(--gold);
+  font-size: var(--t-klein);
+  line-height: 1.45;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(6px);
+  transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+  z-index: 2;
+}
+.marken li.nach-links .notiz { left: auto; right: -13px; border-left: 0; border-right: 2px solid var(--gold); }
+.marken .notiz strong { display: block; font-stretch: 118%; color: var(--glut); margin-bottom: 4px; }
+.marken li:hover .notiz,
+.marken li:focus-within .notiz,
+.marken li.ist-offen .notiz { opacity: 1; visibility: visible; transform: none; }
+
+.anlage__liste {
+  display: none;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.anlage__liste li { padding: 14px 0; border-top: 1px solid var(--fuge); font-size: var(--t-klein); }
+.anlage__liste strong { display: block; color: var(--glut); font-stretch: 118%; }
+
+@media (max-width: 760px) {
+  .marken { display: none; }
+  .anlage__liste { display: block; }
+}
+
+/* Ablauf */
+
+.ablauf h2 { max-width: 14ch; }
+.schritte {
+  margin: clamp(48px, 7vw, 96px) 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: schritt;
+}
+.schritte li {
+  counter-increment: schritt;
+  display: grid;
+  grid-template-columns: minmax(3.5rem, 8rem) minmax(0, 20rem) minmax(0, 1fr);
+  gap: clamp(16px, 3vw, 48px);
+  align-items: baseline;
+  padding: clamp(22px, 3vw, 36px) 0;
+  border-top: 1px solid var(--fuge);
+}
+.schritte li:last-child { border-bottom: 1px solid var(--fuge); }
+.schritte li::before {
+  content: counter(schritt);
+  font-stretch: 125%;
+  font-weight: 300;
+  font-size: var(--t-h2);
+  line-height: 0.9;
+  color: var(--gold);
+}
+.schritte p { color: var(--stahl); }
+
+@media (max-width: 760px) {
+  .schritte li { grid-template-columns: 3rem 1fr; }
+  .schritte p { grid-column: 2; }
+}
+
+/* Kontakt */
+
+.kontakt {
+  background:
+    linear-gradient(to right, rgba(13, 14, 16, 0.96) 0%, rgba(13, 14, 16, 0.8) 45%, rgba(13, 14, 16, 0.35) 100%),
+    url("../assets/img/neubau-licht.webp") center / cover no-repeat;
+}
+.kontakt h2 { max-width: 13ch; }
+.kontakt__wege {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: clamp(28px, 4vw, 56px);
+  margin-top: clamp(40px, 6vw, 80px);
+  max-width: 54rem;
+}
+.kontakt__wege h3 { font-size: var(--t-klein); font-stretch: 100%; font-weight: 500; color: var(--stahl); letter-spacing: 0; }
+.kontakt__wege a,
+.kontakt__wege address {
+  display: block;
+  margin-top: 8px;
+  font-style: normal;
+  font-stretch: 118%;
+  font-weight: 600;
+  font-size: var(--t-h3);
+  line-height: 1.25;
+  text-decoration-color: var(--gold);
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+  overflow-wrap: anywhere;
+}
+.kontakt__wege a:hover { color: var(--glut); }
+
+/* Angaben, die der Betrieb noch liefern muss */
+[data-offen] {
+  background: rgba(227, 165, 72, 0.14);
+  outline: 1px dashed var(--gold);
+  outline-offset: 3px;
+}
+
+/* Fuss */
+
+.fuss {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px 32px;
+  padding: 32px var(--rand);
+  border-top: 1px solid var(--fuge);
+  font-size: var(--t-klein);
+  color: var(--stahl);
+}
+.fuss nav { display: flex; gap: 24px; }
+.fuss a { text-underline-offset: 4px; }
+.fuss a:hover { color: var(--papier); }
+
+/* Rechtstexte */
+
+.recht { padding: clamp(120px, 16vw, 180px) var(--rand) 96px; }
+.recht__innen { max-width: 44rem; margin: 0 auto; }
+.recht h1 { font-size: var(--t-h2); }
+.recht h2 { font-size: var(--t-h3); margin-top: 2.6rem; line-height: 1.2; }
+.recht p, .recht address { margin-top: 0.9rem; font-style: normal; color: #d4d2cc; }
+
+/* ---------- Reduzierte Bewegung: keine Scroll-Buehnen ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .buehne--logo, .buehne--bau { height: auto; }
+  .buehne__fest { position: relative; }
+  .hero__text, .buehne--logo .buehne__schleier { opacity: 1; transform: none; }
+  .buehne--logo { --text: 1; }
+  .hero__hinweis, .stufen__takt { display: none; }
+  .buehne--bau .buehne__fest { height: auto; min-height: 100svh; padding: 120px 0 48px; }
+  .bau__kopf { position: relative; top: auto; }
+  .stufen { position: relative; bottom: auto; margin-top: 48px; }
+  .stufe { position: relative; opacity: 1; transform: none; margin-top: 28px; transition: none; }
+  .anlage__bild img { transform: none; }
+}
