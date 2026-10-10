@@ -3,6 +3,7 @@
 
   var ruhig = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var schmal = window.matchMedia("(max-width: 760px)").matches;
+  var gross = window.matchMedia("(min-width: 1000px)").matches;
   var wurzel = document.documentElement;
 
   function klemme(v, a, b) { return Math.min(b, Math.max(a, v)); }
@@ -11,7 +12,8 @@
   function Folge(buehne) {
     var canvas = buehne.querySelector("canvas");
     var ctx = canvas.getContext("2d");
-    var pfad = buehne.dataset.pfad;
+    /* Grosse Bildschirme bekommen die 1080p-Folge, kleine die leichtere 720p-Folge */
+    var pfad = (gross && buehne.dataset.pfadHd) || buehne.dataset.pfad;
     var anzahl = parseInt(buehne.dataset.bilder, 10);
     var fokusB = parseFloat(buehne.dataset.fokusB || "1");
     var fokusH = parseFloat(buehne.dataset.fokusH || "1");
