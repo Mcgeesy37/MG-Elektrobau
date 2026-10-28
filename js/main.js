@@ -18,6 +18,7 @@
     var fokusB = parseFloat(buehne.dataset.fokusB || "1");
     var fokusH = parseFloat(buehne.dataset.fokusH || "1");
     var schritt = schmal ? 2 : 1;
+    var grund = getComputedStyle(buehne.querySelector(".buehne__fest")).backgroundColor || "#0d0e10";
     var bilder = [];
     var gezeichnet = -1;
     var ziel = 0;
@@ -48,7 +49,7 @@
       var w = iw * s, h = ih * s;
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
-      ctx.fillStyle = "#0d0e10";
+      ctx.fillStyle = grund;
       ctx.fillRect(0, 0, cw, ch);
       ctx.drawImage(bild, (cw - w) / 2, (ch - h) / 2, w, h);
     }

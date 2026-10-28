@@ -1,5 +1,5 @@
 /* MG Elektrobau GmbH
-   Palette aus dem Firmenschild: Schiefer, Graphit, gebuersteter Stahl, Gold.
+   Palette aus dem Logo: Schwarz, Graphit, Stahl, Weiss und Strom-Cyan.
    Eine Schriftfamilie (Archivo), Breite als Gestaltungsmittel. */
 
 @font-face {
@@ -25,8 +25,8 @@
   --fuge: #2c2f33;
   --stahl: #aab0b6;
   --papier: #efede7;
-  --gold: #e3a548;
-  --glut: #ffd08a;
+  --strom: #12d8e6;
+  --strom-hell: #8ff4fb;
 
   --rand: clamp(20px, 5vw, 88px);
   --leitung-x: clamp(14px, 2.6vw, 44px);
@@ -75,7 +75,7 @@ h3 { font-size: var(--t-h3); line-height: 1.2; }
 p { margin: 0; max-width: 62ch; }
 
 :focus-visible {
-  outline: 2px solid var(--glut);
+  outline: 2px solid var(--strom-hell);
   outline-offset: 4px;
   border-radius: 2px;
 }
@@ -85,7 +85,7 @@ p { margin: 0; max-width: 62ch; }
   left: -999px;
   top: 8px;
   z-index: 100;
-  background: var(--gold);
+  background: var(--strom);
   color: var(--schiefer);
   padding: 10px 16px;
 }
@@ -107,8 +107,8 @@ p { margin: 0; max-width: 62ch; }
   position: absolute;
   inset: 0 0 auto 0;
   height: calc(var(--fortschritt, 0) * 100%);
-  background: linear-gradient(to bottom, rgba(227, 165, 72, 0.25), var(--gold) 70%, var(--glut));
-  box-shadow: 0 0 12px rgba(255, 208, 138, 0.55);
+  background: linear-gradient(to bottom, rgba(18, 216, 230, 0.25), var(--strom) 70%, var(--strom-hell));
+  box-shadow: 0 0 12px rgba(143, 244, 251, 0.55);
 }
 .leitung__strom::after {
   content: "";
@@ -119,8 +119,8 @@ p { margin: 0; max-width: 62ch; }
   height: 8px;
   margin-left: -4px;
   border-radius: 50%;
-  background: var(--glut);
-  box-shadow: 0 0 14px 4px rgba(255, 208, 138, 0.7);
+  background: var(--strom-hell);
+  box-shadow: 0 0 14px 4px rgba(143, 244, 251, 0.7);
 }
 
 /* ---------- Kopf ---------- */
@@ -151,7 +151,7 @@ p { margin: 0; max-width: 62ch; }
   font-size: 1.05rem;
   letter-spacing: 0.01em;
 }
-.marke span { color: var(--gold); }
+.marke span { color: var(--strom); }
 .marke small {
   font-size: 0.7rem;
   font-weight: 500;
@@ -168,11 +168,11 @@ p { margin: 0; max-width: 62ch; }
 .nav a:hover { color: var(--papier); }
 .nav .nav__ruf {
   color: var(--schiefer);
-  background: var(--gold);
+  background: var(--strom);
   padding: 10px 18px;
   font-weight: 600;
 }
-.nav .nav__ruf:hover { background: var(--glut); color: var(--schiefer); }
+.nav .nav__ruf:hover { background: var(--strom-hell); color: var(--schiefer); }
 
 .nav .nav__ruf { white-space: nowrap; }
 @media (max-width: 760px) {
@@ -207,6 +207,8 @@ p { margin: 0; max-width: 62ch; }
   pointer-events: none;
 }
 
+.buehne--logo .buehne__fest { background: #000; }
+
 /* Hero: das Schild rueckt nach oben, sobald der Text erscheint */
 
 .buehne__bild {
@@ -221,13 +223,13 @@ p { margin: 0; max-width: 62ch; }
   inset: -1px;
   pointer-events: none;
   background:
-    linear-gradient(to right, #0d0e10 0%, rgba(13, 14, 16, 0) 14%, rgba(13, 14, 16, 0) 86%, #0d0e10 100%),
-    linear-gradient(to bottom, #0d0e10 0%, rgba(13, 14, 16, 0) 12%, rgba(13, 14, 16, 0) 84%, #0d0e10 100%);
+    linear-gradient(to right, #000 0%, rgba(0, 0, 0, 0) 14%, rgba(0, 0, 0, 0) 86%, #000 100%),
+    linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0) 12%, rgba(0, 0, 0, 0) 84%, #000 100%);
 }
 
 .buehne--logo .buehne__schleier {
   background:
-    linear-gradient(to top, #0d0e10 0%, rgba(13, 14, 16, 0.9) 22%, rgba(13, 14, 16, 0) 38%);
+    linear-gradient(to top, #000 0%, rgba(0, 0, 0, 0.9) 22%, rgba(0, 0, 0, 0) 38%);
   opacity: var(--text, 0);
 }
 .hero__text {
@@ -271,12 +273,12 @@ p { margin: 0; max-width: 62ch; }
   font-weight: 600;
   font-stretch: 112%;
   text-decoration: none;
-  background: var(--gold);
+  background: var(--strom);
   color: var(--schiefer);
-  border: 1px solid var(--gold);
+  border: 1px solid var(--strom);
   transition: background-color 0.2s, color 0.2s;
 }
-.knopf:hover { background: var(--glut); border-color: var(--glut); }
+.knopf:hover { background: var(--strom-hell); border-color: var(--strom-hell); }
 .knopf--leise { background: transparent; color: var(--papier); border-color: var(--stahl); }
 .knopf--leise:hover { background: var(--papier); color: var(--schiefer); border-color: var(--papier); }
 
@@ -296,7 +298,7 @@ p { margin: 0; max-width: 62ch; }
   width: 1px;
   height: 34px;
   margin: 12px auto 0;
-  background: linear-gradient(var(--gold), transparent);
+  background: linear-gradient(var(--strom), transparent);
 }
 
 /* Neubau-Folge */
@@ -329,13 +331,13 @@ p { margin: 0; max-width: 62ch; }
   right: 0;
   bottom: 0;
   padding-left: 22px;
-  border-left: 2px solid var(--gold);
+  border-left: 2px solid var(--strom);
   opacity: 0;
   transform: translateY(14px);
   transition: opacity 0.45s, transform 0.45s;
 }
 .stufe.ist-aktiv { opacity: 1; transform: none; }
-.stufe h3 { color: var(--glut); }
+.stufe h3 { color: var(--strom-hell); }
 .stufe p { margin-top: 0.6rem; color: var(--papier); }
 
 .stufen__takt {
@@ -351,7 +353,7 @@ p { margin: 0; max-width: 62ch; }
   background: var(--fuge);
   transition: background-color 0.3s, box-shadow 0.3s;
 }
-.stufen__takt i.ist-an { background: var(--gold); box-shadow: 0 0 8px rgba(255, 208, 138, 0.6); }
+.stufen__takt i.ist-an { background: var(--strom); box-shadow: 0 0 8px rgba(143, 244, 251, 0.6); }
 
 @media (max-width: 760px) {
   .buehne--bau .buehne__schleier {
@@ -394,7 +396,7 @@ p { margin: 0; max-width: 62ch; }
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 52%, rgba(255, 190, 110, calc(var(--sicht, 0) * 0.16)), transparent 55%);
+  background: radial-gradient(ellipse at 50% 52%, rgba(60, 230, 245, calc(var(--sicht, 0) * 0.16)), transparent 55%);
   mix-blend-mode: screen;
   pointer-events: none;
 }
@@ -413,7 +415,7 @@ p { margin: 0; max-width: 62ch; }
   width: 26px;
   height: 26px;
   padding: 0;
-  border: 1.5px solid var(--glut);
+  border: 1.5px solid var(--strom-hell);
   border-radius: 50%;
   background: rgba(19, 20, 22, 0.7);
   cursor: pointer;
@@ -423,8 +425,8 @@ p { margin: 0; max-width: 62ch; }
   position: absolute;
   inset: 7px;
   border-radius: 50%;
-  background: var(--glut);
-  box-shadow: 0 0 10px 2px rgba(255, 208, 138, 0.7);
+  background: var(--strom-hell);
+  box-shadow: 0 0 10px 2px rgba(143, 244, 251, 0.7);
 }
 .marken .notiz {
   position: absolute;
@@ -433,7 +435,7 @@ p { margin: 0; max-width: 62ch; }
   width: 15rem;
   padding: 14px 16px;
   background: rgba(19, 20, 22, 0.94);
-  border-left: 2px solid var(--gold);
+  border-left: 2px solid var(--strom);
   font-size: var(--t-klein);
   line-height: 1.45;
   opacity: 0;
@@ -442,8 +444,8 @@ p { margin: 0; max-width: 62ch; }
   transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
   z-index: 2;
 }
-.marken li.nach-links .notiz { left: auto; right: -13px; border-left: 0; border-right: 2px solid var(--gold); }
-.marken .notiz strong { display: block; font-stretch: 118%; color: var(--glut); margin-bottom: 4px; }
+.marken li.nach-links .notiz { left: auto; right: -13px; border-left: 0; border-right: 2px solid var(--strom); }
+.marken .notiz strong { display: block; font-stretch: 118%; color: var(--strom-hell); margin-bottom: 4px; }
 .marken li:hover .notiz,
 .marken li:focus-within .notiz,
 .marken li.ist-offen .notiz { opacity: 1; visibility: visible; transform: none; }
@@ -455,7 +457,7 @@ p { margin: 0; max-width: 62ch; }
   list-style: none;
 }
 .anlage__liste li { padding: 14px 0; border-top: 1px solid var(--fuge); font-size: var(--t-klein); }
-.anlage__liste strong { display: block; color: var(--glut); font-stretch: 118%; }
+.anlage__liste strong { display: block; color: var(--strom-hell); font-stretch: 118%; }
 
 @media (max-width: 760px) {
   .marken { display: none; }
@@ -487,7 +489,7 @@ p { margin: 0; max-width: 62ch; }
   font-weight: 300;
   font-size: var(--t-h2);
   line-height: 0.9;
-  color: var(--gold);
+  color: var(--strom);
 }
 .schritte p { color: var(--stahl); }
 
@@ -521,17 +523,17 @@ p { margin: 0; max-width: 62ch; }
   font-weight: 600;
   font-size: var(--t-h3);
   line-height: 1.25;
-  text-decoration-color: var(--gold);
+  text-decoration-color: var(--strom);
   text-underline-offset: 6px;
   text-decoration-thickness: 2px;
   overflow-wrap: anywhere;
 }
-.kontakt__wege a:hover { color: var(--glut); }
+.kontakt__wege a:hover { color: var(--strom-hell); }
 
 /* Angaben, die der Betrieb noch liefern muss */
 [data-offen] {
-  background: rgba(227, 165, 72, 0.14);
-  outline: 1px dashed var(--gold);
+  background: rgba(18, 216, 230, 0.14);
+  outline: 1px dashed var(--strom);
   outline-offset: 3px;
 }
 
