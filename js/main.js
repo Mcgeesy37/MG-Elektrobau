@@ -21,6 +21,15 @@
     var grund = getComputedStyle(buehne.querySelector(".buehne__fest")).backgroundColor || "#0d0e10";
     var bilder = [];
     var gezeichnet = -1;
+    /* Optionale scharfe Vektor-Ebene, die gegen Ende der Folge exakt deckungsgleich einblendet */
+    var scharf = null;
+    var scharfAb = parseFloat(buehne.dataset.scharfAb || "0.76");
+    if (buehne.dataset.scharf) {
+      scharf = new Image();
+      scharf.decoding = "async";
+      scharf.onload = function () { scharf.fertig = true; zeichne(true); };
+      scharf.src = buehne.dataset.scharf;
+    }
     var ziel = 0;
 
     function quelle(i) {
@@ -52,6 +61,15 @@
       ctx.fillStyle = grund;
       ctx.fillRect(0, 0, cw, ch);
       ctx.drawImage(bild, (cw - w) / 2, (ch - h) / 2, w, h);
+      if (scharf && scharf.fertig) {
+        var t = bild.index / (anzahl - 1);
+        var deck = ruhig ? 1 : klemme((t - scharfAb) / 0.18, 0, 1);
+        if (deck > 0) {
+          ctx.globalAlpha = deck;
+          ctx.drawImage(scharf, (cw - w) / 2, (ch - h) / 2, w, h);
+          ctx.globalAlpha = 1;
+        }
+      }
     }
 
     function groesse() {
