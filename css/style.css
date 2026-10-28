@@ -214,8 +214,6 @@ p { margin: 0; max-width: 62ch; }
 .buehne__bild {
   position: absolute;
   inset: 0;
-  transform: translateY(calc(var(--text, 0) * -11%)) scale(calc(1 - var(--text, 0) * 0.24));
-  will-change: transform;
 }
 .buehne__bild::after {
   content: "";
@@ -259,7 +257,6 @@ p { margin: 0; max-width: 62ch; }
   .hero__text p { margin-top: 0; }
 }
 @media (max-width: 899px) {
-  .buehne__bild { transform: translateY(calc(var(--text, 0) * -20svh)); }
 }
 .hero__wahl {
   display: flex;

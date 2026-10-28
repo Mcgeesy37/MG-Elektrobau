@@ -21,6 +21,8 @@
     var grund = getComputedStyle(buehne.querySelector(".buehne__fest")).backgroundColor || "#0d0e10";
     var bilder = [];
     var gezeichnet = -1;
+    /* Freizuhaltende Raender in CSS-Pixeln, z. B. Kopfleiste oben und Hero-Text unten */
+    var randOben = 0, randUnten = 0;
     /* Optionale scharfe Vektor-Ebene, die gegen Ende der Folge exakt deckungsgleich einblendet */
     var scharf = null;
     var scharfAb = parseFloat(buehne.dataset.scharfAb || "0.76");
@@ -51,22 +53,25 @@
       if (!erzwingen && bild.index === gezeichnet) return;
       gezeichnet = bild.index;
       var cw = canvas.width, ch = canvas.height;
+      var dpr = cw / Math.max(canvas.clientWidth, 1);
+      var oben = randOben * dpr, frei = Math.max(ch - oben - randUnten * dpr, ch * 0.2);
       var iw = bild.naturalWidth, ih = bild.naturalHeight;
       var decken = Math.max(cw / iw, ch / ih);
-      var fokus = Math.min(cw / (iw * fokusB), ch / (ih * fokusH));
+      var fokus = Math.min(cw / (iw * fokusB), frei / (ih * fokusH));
       var s = Math.min(decken, fokus);
       var w = iw * s, h = ih * s;
+      var x = (cw - w) / 2, y = oben + (frei - h) / 2;
       ctx.imageSmoothingEnabled = true;
       ctx.imageSmoothingQuality = "high";
       ctx.fillStyle = grund;
       ctx.fillRect(0, 0, cw, ch);
-      ctx.drawImage(bild, (cw - w) / 2, (ch - h) / 2, w, h);
+      ctx.drawImage(bild, x, y, w, h);
       if (scharf && scharf.fertig) {
         var t = bild.index / (anzahl - 1);
         var deck = ruhig ? 1 : klemme((t - scharfAb) / 0.18, 0, 1);
         if (deck > 0) {
           ctx.globalAlpha = deck;
-          ctx.drawImage(scharf, (cw - w) / 2, (ch - h) / 2, w, h);
+          ctx.drawImage(scharf, x, y, w, h);
           ctx.globalAlpha = 1;
         }
       }
@@ -104,6 +109,12 @@
 
     this.groesse = groesse;
 
+    this.raender = function (o, u) {
+      if (Math.abs(o - randOben) < 0.5 && Math.abs(u - randUnten) < 0.5) return;
+      randOben = o; randUnten = u;
+      zeichne(true);
+    };
+
     if (ruhig) {
       lade(anzahl - 1);
       ziel = anzahl - 1;
@@ -125,6 +136,13 @@
   }
 
   var kopf = document.querySelector(".kopf");
+  var heroText = document.querySelector(".hero__text");
+  function kopfHoehe() { return kopf ? kopf.offsetHeight + 8 : 0; }
+  function heroPlatz() {
+    if (!heroText) return 0;
+    var abstand = parseFloat(getComputedStyle(heroText).bottom) || 0;
+    return heroText.offsetHeight + abstand + 24;
+  }
   var logoBuehne = document.querySelector(".buehne--logo");
   var bauBuehne = document.querySelector(".buehne--bau");
   var logo = logoBuehne ? new Folge(logoBuehne) : null;
@@ -145,8 +163,13 @@
       var p = logo.fortschritt();
       logo.setze(klemme(p / 0.78, 0, 1));
       logoBuehne.style.setProperty("--p", p.toFixed(3));
-      logoBuehne.style.setProperty("--text", klemme((p - 0.7) / 0.2, 0, 1).toFixed(3));
+      var sicht = klemme((p - 0.7) / 0.2, 0, 1);
+      logoBuehne.style.setProperty("--text", sicht.toFixed(3));
+      /* Das Logo weicht dem Hero-Text aus, statt ihn zu ueberlagern */
+      logo.raender(kopfHoehe(), sicht * heroPlatz());
     }
+
+    if (logo && ruhig) logo.raender(kopfHoehe(), heroPlatz());
 
     if (bau && !ruhig) {
       var q = bau.fortschritt();
