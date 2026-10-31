@@ -550,7 +550,205 @@ p { margin: 0; max-width: 62ch; }
 .fuss a { text-underline-offset: 4px; }
 .fuss a:hover { color: var(--papier); }
 
+/* Grosser Fuss mit Leistungen und Einsatzgebiet */
+
+.fuss--gross { display: block; padding-top: clamp(48px, 7vw, 88px); }
+.fuss__spalten {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 72px);
+  max-width: var(--mass);
+  margin: 0 auto;
+}
+.fuss__marke { font-stretch: 125%; font-weight: 700; font-size: 1.1rem; color: var(--papier); }
+.fuss__marke span { color: var(--strom); }
+.fuss--gross address { font-style: normal; margin: 12px 0; color: var(--papier); }
+.fuss--gross p { margin-bottom: 20px; }
+.fuss--gross nav { display: block; }
+.fuss--gross h2 { font-size: var(--t-klein); font-stretch: 112%; margin-bottom: 14px; }
+.fuss--gross h2 a { color: var(--papier); text-decoration: none; }
+.fuss--gross ul { list-style: none; margin: 0; padding: 0; }
+.fuss--gross li { padding: 5px 0; }
+.fuss--gross li a { text-decoration: none; }
+.fuss--gross li a:hover { color: var(--strom-hell); }
+.fuss__zeile {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 16px 32px;
+  max-width: var(--mass);
+  margin: clamp(40px, 6vw, 72px) auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--fuge);
+}
+.fuss__zeile nav { display: flex; gap: 24px; }
+@media (max-width: 760px) {
+  .fuss__spalten { grid-template-columns: 1fr; }
+}
+
+/* Unterseiten */
+
+.seitenkopf {
+  position: relative;
+  padding: clamp(120px, 15vw, 190px) var(--rand) clamp(56px, 8vw, 104px);
+  background: #000;
+}
+.seitenkopf--bild {
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.95) 0%, rgba(0, 0, 0, 0.82) 50%, rgba(0, 0, 0, 0.45) 100%),
+    var(--bild) center / cover no-repeat, #000;
+}
+.seitenkopf h1 { font-size: clamp(2rem, 1rem + 3.6vw, 4rem); max-width: 18ch; overflow-wrap: break-word; hyphens: auto; }
+.seitenkopf .einstieg { margin-top: 1.4rem; font-size: var(--t-lead); line-height: 1.45; color: #d4d2cc; max-width: 54ch; }
+.seitenkopf .hero__wahl { margin-top: 2rem; }
+
+.brotkrumen { font-size: var(--t-klein); color: var(--stahl); margin-bottom: 1.6rem; }
+.brotkrumen a { color: var(--stahl); text-underline-offset: 4px; }
+.brotkrumen a:hover { color: var(--papier); }
+.brotkrumen [aria-current] { color: var(--papier); }
+
+.fakten {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 40px;
+  margin: clamp(32px, 5vw, 56px) 0 0;
+  padding: 0;
+  list-style: none;
+}
+.fakten li { padding-left: 16px; border-left: 2px solid var(--strom); font-size: var(--t-klein); color: var(--stahl); }
+.fakten strong { display: block; color: var(--papier); font-stretch: 112%; }
+
+.abschnitt--eng { padding-top: clamp(56px, 8vw, 104px); padding-bottom: clamp(56px, 8vw, 104px); }
+.abschnitt--eng + .abschnitt--eng { padding-top: 0; }
+
+.text > * { max-width: 46rem; }
+.text h2 { font-size: var(--t-h3); line-height: 1.2; margin: 2.6rem 0 1rem; }
+.text h2:first-child { margin-top: 0; }
+.text p { margin-top: 1rem; color: #d4d2cc; }
+.text a { color: var(--strom-hell); text-underline-offset: 4px; }
+.ortsliste a { white-space: nowrap; margin-right: 0.6em; }
+
+.haken { margin: 1rem 0 0; padding: 0; list-style: none; }
+.haken li { position: relative; padding: 10px 0 10px 28px; border-top: 1px solid var(--fuge); color: #d4d2cc; }
+.haken li:last-child { border-bottom: 1px solid var(--fuge); }
+.haken li::before {
+  content: "";
+  position: absolute;
+  left: 2px;
+  top: 1.05em;
+  width: 10px;
+  height: 2px;
+  background: var(--strom);
+  box-shadow: 0 0 8px rgba(143, 244, 251, 0.6);
+}
+
+.karten {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 1px;
+  margin: 1.6rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.karte {
+  outline: 1px solid var(--fuge);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 100%;
+  padding: 22px 22px 26px;
+  background: var(--schiefer);
+  text-decoration: none;
+  transition: background-color 0.2s;
+}
+.karte strong { font-stretch: 115%; color: var(--papier); }
+.karte span { font-size: var(--t-klein); color: var(--stahl); line-height: 1.5; }
+.karte:hover { background: var(--graphit); }
+.karte:hover strong { color: var(--strom-hell); }
+
+.faq { margin-top: 1.6rem; max-width: 50rem; border-top: 1px solid var(--fuge); }
+.faq details { border-bottom: 1px solid var(--fuge); }
+.faq summary {
+  position: relative;
+  padding: 18px 44px 18px 0;
+  cursor: pointer;
+  list-style: none;
+  font-weight: 600;
+  font-stretch: 108%;
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after {
+  content: "+";
+  position: absolute;
+  right: 6px;
+  top: 14px;
+  font-size: 1.4rem;
+  color: var(--strom);
+}
+.faq details[open] summary::after { content: "−"; }
+.faq details p { padding: 0 0 20px; color: #d4d2cc; }
+
+.aufruf {
+  padding: clamp(56px, 8vw, 96px) var(--rand);
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.94), rgba(0, 0, 0, 0.6)),
+    url("../assets/img/neubau-licht.webp") center 40% / cover no-repeat;
+  border-top: 1px solid var(--fuge);
+  border-bottom: 1px solid var(--fuge);
+}
+.aufruf h2 { font-size: var(--t-h2); max-width: 16ch; }
+.aufruf p { margin: 1rem 0 1.8rem; color: #d4d2cc; }
+
+/* Anfrageformular */
+
+.anfrage { max-width: 46rem; }
+.anfrage fieldset { margin: 0 0 2.4rem; padding: 0; border: 0; min-width: 0; }
+.anfrage legend { font-size: var(--t-h3); font-stretch: 118%; font-weight: 600; margin-bottom: 1rem; }
+.anfrage label { display: block; margin-bottom: 1.1rem; font-size: var(--t-klein); color: var(--stahl); }
+.anfrage input:not([type="checkbox"]),
+.anfrage select,
+.anfrage textarea {
+  display: block;
+  width: 100%;
+  margin-top: 6px;
+  padding: 13px 14px;
+  font: inherit;
+  font-size: 1rem;
+  color: var(--papier);
+  background: var(--graphit);
+  border: 1px solid var(--fuge);
+  border-radius: 0;
+}
+.anfrage select {
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--strom) 50%), linear-gradient(135deg, var(--strom) 50%, transparent 50%);
+  background-position: calc(100% - 20px) 50%, calc(100% - 14px) 50%;
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+.anfrage input:focus, .anfrage select:focus, .anfrage textarea:focus { outline: 2px solid var(--strom); outline-offset: 0; border-color: var(--strom); }
+.anfrage [aria-invalid="true"] { border-color: #ff6b6b; }
+.anfrage .zwei { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
+.wahlgruppe { margin-bottom: 1.1rem; }
+.wahlgruppe > span { display: block; font-size: var(--t-klein); color: var(--stahl); margin-bottom: 8px; }
+.anfrage .wahl { display: inline-flex; align-items: center; gap: 8px; margin: 0 8px 8px 0; padding: 9px 14px; border: 1px solid var(--fuge); color: var(--papier); cursor: pointer; }
+.anfrage .wahl:has(input:checked) { border-color: var(--strom); background: rgba(18, 216, 230, 0.1); }
+.anfrage input[type="checkbox"] { accent-color: var(--strom); }
+.anfrage .hinweis { font-size: var(--t-klein); color: var(--stahl); margin-bottom: 1.2rem; }
+.anfrage .hinweis a { color: var(--strom-hell); }
+.anfrage .fehler { color: #ff8f8f; margin-bottom: 1rem; }
+.anfrage .knopf { border: 0; cursor: pointer; font: inherit; font-weight: 600; font-stretch: 112%; }
+@media (max-width: 600px) {
+  .anfrage .zwei { grid-template-columns: 1fr; }
+}
+
+/* Startseite: Einsatzgebiet und FAQ */
+
+.gebiet .einstieg, .fragen .einstieg { max-width: 52ch; }
+
 /* Rechtstexte */
+
+.recht { overflow-wrap: break-word; hyphens: auto; }
 
 .recht { padding: clamp(120px, 16vw, 180px) var(--rand) 96px; }
 .recht__innen { max-width: 44rem; margin: 0 auto; }
@@ -573,3 +771,4 @@ p { margin: 0; max-width: 62ch; }
   .stufe { position: relative; opacity: 1; transform: none; margin-top: 28px; transition: none; }
   .anlage__bild img { transform: none; }
 }
+.kontakt__los { margin-top: 1.8rem; }
