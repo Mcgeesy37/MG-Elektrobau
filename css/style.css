@@ -152,6 +152,9 @@ p { margin: 0; max-width: 62ch; }
   letter-spacing: 0.01em;
 }
 .marke span { color: var(--strom); }
+.marke { align-items: center; }
+.marke__zeichen { width: 34px; height: 34px; flex: none; margin-right: 0.2em; }
+@media (max-width: 760px) { .marke__zeichen { width: 30px; height: 30px; } }
 .marke small {
   font-size: 0.7rem;
   font-weight: 500;
