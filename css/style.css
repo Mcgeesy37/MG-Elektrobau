@@ -585,6 +585,9 @@ p { margin: 0; max-width: 62ch; }
   border-top: 1px solid var(--fuge);
 }
 .fuss__zeile nav { display: flex; gap: 24px; }
+.fuss__macher { color: var(--stahl); font-size: var(--t-klein); transition: color 0.2s; }
+.fuss__macher span { color: var(--papier); }
+.fuss__macher:hover, .fuss__macher:hover span { color: var(--strom-hell); }
 @media (max-width: 760px) {
   .fuss__spalten { grid-template-columns: 1fr; }
 }
