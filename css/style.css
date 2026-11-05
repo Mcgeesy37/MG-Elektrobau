@@ -508,10 +508,12 @@ p { margin: 0; max-width: 62ch; }
 .kontakt h2 { max-width: 13ch; }
 .kontakt__wege {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: clamp(28px, 4vw, 56px);
+  grid-template-columns: repeat(3, max-content);
+  gap: clamp(28px, 4vw, 64px);
   margin-top: clamp(40px, 6vw, 80px);
-  max-width: 54rem;
+}
+@media (max-width: 900px) {
+  .kontakt__wege { grid-template-columns: 1fr; }
 }
 .kontakt__wege h3 { font-size: var(--t-klein); font-stretch: 100%; font-weight: 500; color: var(--stahl); letter-spacing: 0; }
 .kontakt__wege a,
@@ -521,8 +523,9 @@ p { margin: 0; max-width: 62ch; }
   font-style: normal;
   font-stretch: 118%;
   font-weight: 600;
-  font-size: var(--t-h3);
-  line-height: 1.25;
+  font-size: clamp(1.15rem, 0.95rem + 0.7vw, 1.5rem);
+  line-height: 1.3;
+  white-space: nowrap;
   text-decoration-color: var(--strom);
   text-underline-offset: 6px;
   text-decoration-thickness: 2px;
