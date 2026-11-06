@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://mcgeesy37.github.io/MG-Elektrobau/sitemap.xml
+Sitemap: https://mg-elektrobau.de/sitemap.xml
